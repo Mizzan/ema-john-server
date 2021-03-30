@@ -17,9 +17,6 @@ app.use(cors());
 
 const port = 5000;
 
-app.get('/', (req, res) => {
-  res.send('Welcome to ema-john e-commerce');
-});
 // mongodb
 const client = new MongoClient(uri, {
   useNewUrlParser: true,
@@ -41,19 +38,13 @@ client.connect((err) => {
     });
   });
 
-  // getting the all fakedata products from the mongodb database
+  // getting the fakeData from the mongodb database
   app.get('/products', (req, res) => {
-    productsCollection.find({}).toArray((err, documents) => {
-      res.send(documents);
-    });
-  });
-
-  // getting the single fakeData product from the mongodb database
-  app.get('/product/:key', (req, res) => {
     productsCollection
-      .find({ key: req.params.key })
+      .find({})
+      .limit(20)
       .toArray((err, documents) => {
-        res.send(documents[0]);
+        res.send(documents);
       });
   });
 });
