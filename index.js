@@ -17,12 +17,16 @@ const client = new MongoClient(uri, {
   useUnifiedTopology: true,
 });
 client.connect((err) => {
-  const products = client.db(process.env.DB_NAME).collection('products');
+  const productsCollection = client
+    .db(process.env.DB_NAME)
+    .collection('products');
   // perform actions on the collection object
-  app.post('/addProducts', (req, res) => {
-    const product = req.body;
-    products.insertOne(product).then((result) => {
-      console.log(result);
+  app.post('/addProduct', (req, res) => {
+    const products = req.body;
+    // console.log(product);
+    productsCollection.insertMany(products).then((result) => {
+      console.log(result.insertedCount);
+      res.send(result.insertedCount);
     });
   });
 });
