@@ -35,7 +35,7 @@ client.connect((err) => {
   app.post('/addProduct', (req, res) => {
     const products = req.body;
     // console.log(product);
-    productsCollection.insertMany(products).then((result) => {
+    productsCollection.insertOne(products).then((result) => {
       console.log(result.insertedCount);
       res.send(result.insertedCount);
     });
