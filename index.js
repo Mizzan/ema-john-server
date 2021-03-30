@@ -20,6 +20,7 @@ const port = 5000;
 app.get('/', (req, res) => {
   res.send('Welcome to ema-john e-commerce');
 });
+
 // mongodb
 const client = new MongoClient(uri, {
   useNewUrlParser: true,
@@ -79,4 +80,4 @@ client.connect((err) => {
 });
 // mongodb
 
-app.listen(port);
+app.listen(process.env.PORT || port);
