@@ -29,6 +29,7 @@ client.connect((err) => {
   const productsCollection = client
     .db(process.env.DB_NAME)
     .collection('products');
+  const ordersCollection = client.db(process.env.DB_NAME).collection('orders');
   console.log('database connected');
 
   //   posting data to the database
@@ -65,6 +66,15 @@ client.connect((err) => {
       .toArray((err, documents) => {
         res.send(documents);
       });
+  });
+
+  //   posting order data to the database
+  app.post('/addOrder', (req, res) => {
+    const orders = req.body;
+    // console.log(product);
+    ordersCollection.insertOne(orders).then((result) => {
+      res.send(result.insertedCount > 0);
+    });
   });
 });
 // mongodb
